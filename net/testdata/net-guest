@@ -1,0 +1,135 @@
+#! /usr/bin/env tclsh
+#
+# Guest network configuration
+#
+# Guest networks will typically be configured by setting up a DHCP proxy,
+# set up IP masquerading via the standard interface,
+# limit access to public internet only,
+# do not allow internet to reach in
+# put a rate limit policy on the total volume
+# set up a SNORT monitor
+
+
+package require Tcl   8.5
+source json.tcl
+source ip.tcl
+
+proc list_interfaces {} {
+	if {[info exists ::ifaces]} { return $::ifaces }
+	set ::ifaces [json::json2dict [exec ip -json addr]]
+	return $::ifaces
+}
+
+if  { $argc <= 2 } {
+	puts "invalid request to masquerade sub-net."
+	puts "use format -src <src> -dst <dst>"
+	set iff {}
+	foreach iface [list_interfaces] { lappend iff [dict get $iface ifname] }
+	puts "available interfaces: $iff"
+	exit 1
+}
+
+# Additional arguments available:
+#  -gw 10.1.50.0/24 defines the subnet that will be served
+#  -bw 120 defines the bandwidth that will be afforded
+ for {set i 0} {$i < $argc} {incr i} {
+ 	set s [lindex $argv $i]
+ 	switch $s {
+ 		-gw { incr i; set ::gateway [lindex $argv $i]  }
+ 	    -src { incr i; set ::source [lindex $argv $i] }
+     	-dst { incr i; set ::destination [lindex $argv $i] }
+     	default { puts "invalid argument $s"; exit 1 }
+ 	}
+ }
+
+  if      {![info exists ::gateway]} { puts stderr "no gateway provided"; exit 1 
+} elseif {![info exists ::source]} { puts stderr "no source provided"; exit 1
+} elseif {![info exists ::destination]} { puts stderr "no destination provided"; exit 1
+}
+
+
+# Firewall and marking
+#
+# We use fwmarks to interact with NAT, tc and ip routes
+#
+# We use the first byte to mark routing actions:
+#  - 0x1: 
+#  - 0x3: throttling
+#  - 0x4: masqueraded
+#  - 0x5: static NAT
+#
+# We use the second byte to classify the QoS:
+#
+#  - 0x100: control plan
+#  - 0x200: data plan
+#  - 0x300: guest plan
+
+
+# FW rules:
+#  - accept packets from localhost to the internal network (so we can ping instances)
+#  - accept packets from existing connections (that’s a global rule)
+#  - reject packets from other interfaces coming in (no reach from outside)
+#  - accepts packets to local address (DNS and DHCP server)
+#  - reject packets on any reserved ranges
+#  - rate limit on inputs
+
+puts "setting first command for IP address" 
+puts "=========================="
+puts "ip addr add $::gateway dev $::source"
+
+
+set net [ip::range $::gateway]
+
+puts " "
+puts "setting second command for firewall"
+puts "=========================="
+puts "
+define RESERVED_RANGES = {
+	10.0.0.0/8,
+	169.254.0.0/16,
+	172.16.0.0/12,
+	192.168.0.0/16,
+}
+
+table ip cyberbox {
+
+	chain box-input.$::source {
+		iifname \"lo\" ip saddr $net counter accept
+		iifname != \"$::source\" ip saddr $net counter drop
+		iifname \"$::source\" ip daddr $net counter accept
+		iifname \"$::source\" ip daddr \$RESERVED_RANGES counter drop
+		ip saddr $net limit rate over 10 mbytes/second counter meta mark set mark xor 
+	}
+
+	chain box-forward.$::source {
+		iifname \"$::source\" counter meta mark set mark xor 0x4
+		mark and 0xff == 0x4 counter accept
+		oifname \"$::destination\" ip saddr $net counter drop
+		oifname \"$::destination\" counter accept
+
+	}
+
+	chain input {
+		type filter hook input priority filter; policy accept;
+		ct state related,established counter accept
+		ct state invalid counter drop
+		counter jump box-input.$::source
+	}
+
+	chain forward {
+		type filter hook forward priority filter; policy accept;
+		counter jump box-forward.$::source
+		limit rate 3/minute burst 10 packets counter log prefix \"\[FW FORWARD\] \"
+	}
+
+	chain output {
+
+	}
+
+	chain postrouting {
+		type nat hook postrouting priority srcnat; policy accept;
+		mark and 0xff == 0x4 counter masquerade
+	}
+}
+"
+puts ""

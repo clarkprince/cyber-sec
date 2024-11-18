@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "runem.lit-plugin",
+        // bierner.lit-html is unmaintained @see https://github.com/mjbvz/vscode-lit-html/issues/98
+        //"bierner.lit-html",
+        "bradlc.vscode-tailwindcss",
+        "csstools.postcss"
+    ]
+}

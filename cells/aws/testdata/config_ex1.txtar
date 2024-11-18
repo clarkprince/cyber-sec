@@ -1,0 +1,111 @@
+-- config --
+{
+  "resourceId": "kraken-test",
+  "configuration": {
+    "attributeDefinitions": [
+      {
+        "attributeType": "S",
+        "attributeName": "OID"
+      },
+      {
+        "attributeType": "S",
+        "attributeName": "path"
+      }
+    ],
+    "billingModeSummary": {
+      "billingMode": "PAY_PER_REQUEST",
+      "lastUpdateToPayPerRequestDateTime": "2022-03-25T20:40:50.123Z"
+    },
+    "keySchema": [
+      {
+        "attributeName": "path",
+        "keyType": "HASH"
+      },
+      {
+        "attributeName": "OID",
+        "keyType": "RANGE"
+      }
+    ],
+    "tableId": "04eeae33-c185-40ff-9fd1-d3586755144b",
+    "deletionProtectionEnabled": false,
+    "tableClassSummary": {
+      "tableClass": "STANDARD_INFREQUENT_ACCESS"
+    },
+    "provisionedThroughput": {
+      "numberOfDecreasesToday": 0.0,
+      "writeCapacityUnits": 0.0,
+      "readCapacityUnits": 0.0
+    },
+    "tableStatus": "ACTIVE",
+    "tableName": "kraken-test",
+    "creationDateTime": "2022-03-25T20:40:50.123Z",
+    "tableArn": "arn:aws:dynamodb:us-east-1:152229883546:table/kraken-test"
+  },
+  "resourceName": "kraken-test",
+  "tags": [],
+  "resourceType": "AWS::DynamoDB::Table"
+}
+
+-- lioli --
+resourceId "kraken-test" .
+", " .
+configuration {
+ #attributeDefinitions {
+  attributeType "S" .
+  ", " .
+  attributeName "OID" .
+  ", " .
+ }
+ #attributeDefinitions {
+  attributeType "S" .
+  ", " .
+  attributeName "path" .
+  ", " .
+ }
+ billingModeSummary {
+  billingMode "PAY_PER_REQUEST" .
+  ", " .
+  lastUpdateToPayPerRequestDateTime "2022-03-25T20:40:50.123Z" .
+  ", " .
+ }
+ #keySchema {
+  attributeName "path" .
+  ", " .
+  keyType "HASH" .
+  ", " .
+ }
+ #keySchema {
+  attributeName "OID" .
+  ", " .
+  keyType "RANGE" .
+  ", " .
+ }
+ tableId "04eeae33-c185-40ff-9fd1-d3586755144b" .
+ ", " .
+ deletionProtectionEnabled "false" .
+ ", " .
+ tableClassSummary {
+  tableClass "STANDARD_INFREQUENT_ACCESS" .
+  ", " .
+ }
+ provisionedThroughput {
+  numberOfDecreasesToday "0.0" .
+  ", " .
+  writeCapacityUnits "0.0" .
+  ", " .
+  readCapacityUnits "0.0" .
+  ", " .
+ }
+ tableStatus "ACTIVE" .
+ ", " .
+ tableName "kraken-test" .
+ ", " .
+ creationDateTime "2022-03-25T20:40:50.123Z" .
+ ", " .
+ tableArn "arn:aws:dynamodb:us-east-1:152229883546:table/kraken-test" .
+ ", " .
+}
+resourceName "kraken-test" .
+", " .
+resourceType "AWS::DynamoDB::Table" .
+", " .;

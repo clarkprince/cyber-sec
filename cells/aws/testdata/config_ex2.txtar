@@ -1,0 +1,31 @@
+-- config --
+{
+  "accountId": "152229883546",
+  "resourceId": "sg-0162c3d6123b12b01",
+  "awsRegion": "us-east-1",
+  "resourceName": "default",
+  "arn": "arn:aws:ec2:us-east-1:152229883546:security-group/sg-0162c3d6123b12b01",
+  "configurationItemCaptureTime": "2023-04-27T23:28:53.352Z",
+  "availabilityZone": "Not Applicable",
+  "version": "1.3",
+  "resourceType": "AWS::EC2::SecurityGroup"
+}
+-- lioli --
+accountId "152229883546" .
+", " .
+resourceId "sg-0162c3d6123b12b01" .
+", " .
+awsRegion "us-east-1" .
+", " .
+resourceName "default" .
+", " .
+arn "arn:aws:ec2:us-east-1:152229883546:security-group/sg-0162c3d6123b12b01" .
+", " .
+configurationItemCaptureTime "2023-04-27T23:28:53.352Z" .
+", " .
+availabilityZone "Not Applicable" .
+", " .
+version "1.3" .
+", " .
+resourceType "AWS::EC2::SecurityGroup" .
+", " .;

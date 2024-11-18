@@ -1,0 +1,31 @@
+data_dir = "vector2"
+
+[sources.source0]
+count = 30
+format = "syslog"
+interval = 0.01
+type = "demo_logs"
+
+[sources.source0.decoding]
+codec = "bytes"
+
+[sources.source0.framing]
+method = "bytes"
+
+[sinks.sink0]
+inputs = ["source0"]
+address = "localhost:9000"
+mode = "udp"
+type = "socket"
+
+[sinks.sink0.encoding]
+codec = "raw_message"
+
+[sinks.sink0.healthcheck]
+enabled = true
+
+[sinks.sink0.buffer]
+type = "memory"
+max_events = 500
+when_full = "drop_newest"
+

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+	<html lang="en">
+	  <head>
+		<meta charset="utf-8" />
+		<title>Trout Tests Runner</title>
+		<link rel="prefetch" href="/assets/rxnb.wasm" as="fetch" type="application/wasm">
+		<link rel="stylesheet" href="/assets/main.css">
+        <style>
+        /* realistic display in dark mode
+        in the app, the component parent is supposed to handle the background*/
+        @media (prefers-color-scheme: dark) {
+        html {
+        background-color: #444444;
+        }
+        }
+        </style>
+		<script src="/assets/components.js" type="module"></script>	  
+        </head>
+	  <body>
+		<{{ .Name }} {{ range $name, $values := .Args }} {{ attribute $name $values | escape }} {{- end }}></{{ .Name }}>
+	  </body>
+	</html>

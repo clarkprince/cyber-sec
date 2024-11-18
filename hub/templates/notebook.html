@@ -1,0 +1,47 @@
+<!doctype html>
+{{/** Rendered in hub/notebook.go */}}
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }} {{ end }}</title>
+    <link rel="shortcut icon" href="/assets/logo16.ico">
+    <style id="ssr-flash">
+        :not(:defined) {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        /**
+         * We use the ":not(:defined)" selector in base.html
+         * to make web components invisible after a server render,
+         * until their associated JavaScript is read
+         * This prevents Lit element slots to flash unexpectedly
+         *
+         * The CSS is sufficient, but can prevent the content to appear if the browser doesn't support :defined
+         * This script remove the element to prevent this issue
+         */
+        setTimeout(function () {
+            try {
+                const ssrFlashStyle = document.getElementById("ssr-flash")
+                ssrFlashStyle.remove()
+            } catch (err) {
+                console.warn("Could not remove #ssr-flash style, is it present in DOM?", err)
+            }
+        }, 0)
+    </script>
+    <script src="/assets/custom-elements.min.js"></script>
+    <link rel="prefetch" href="/assets/rxnb.wasm" as="fetch" type="application/wasm">
+    <link rel="stylesheet" href="/assets/main.css">
+    <script src="/assets/components.js" type="module"></script>
+</head>
+
+<body class="text-zinc-800 dark:text-neutral-200 bg-white dark:bg-neutral-800">
+    <wt-notebook-body 
+        notebook-id={{.Notebook.ID}}
+        created='{{.Notebook.Created.Format "2006-01-02 15:04:05" }}' 
+        owner="{{ .Notebook.Owner.Profile.Name }}" 
+        >
+    </wt-notebook-body>
+</body>

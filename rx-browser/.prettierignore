@@ -1,0 +1,6 @@
+# generated artifacts
+*.js
+*.js.map
+
+# prosemirror syntax is hard to parse
+webc/editor/prosemirror/*

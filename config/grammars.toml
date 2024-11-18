@@ -1,0 +1,86 @@
+[[grammars]]
+name = "apache"
+ebnf = '''
+root = ip " - - [" timestamp "] " url " " rcode " " size " " origin [ " " uagent " \"-\"" ] _ .
+ip = { '0' … '9' | '.' } .
+timestamp = { ' ' … '\\' | '_' … '}' } .
+url = '"' verb " " path " HTTP/" method '"' .
+verb = { 'A' … 'z' } .
+path = { ' ' … 'z' } .
+method = { '#' … 'z' } .
+rcode = { '0' … '9' } .
+size = { '0' … '9' } .
+uagent = '"' { ' ' … '}' } '"' .
+origin = '"' { '#' … '}' } '"' .
+'''
+
+[[grammars]]
+name = "thales"
+ebnf = '''
+root = [["=>"] level " " ["(1) > "] timestamp] [message] any .
+message = { ' '… '9' | ';'… '~' } ": ".
+any =  { ' '… '~' } .
+timestamp = ('0'… '9') ('0'… '9') ":" ('0'… '9') ['0'… '9'] .
+level = ("ERROR" | "EXCEPT") | "INIT" .
+'''
+
+[[grammars]]
+name = "Google SAML"
+ebnf = '''
+root = Date "," Event "," Description "," Actor "," Application "," Initiated "," Failure "," Response "," Second "," IP .
+Date = { ' ' … '+' | '-' … '~' } .
+Event = { ' ' … '+' | '-' … '~' } .
+Description = { ' ' … '+' | '-' … '~' } .
+Actor = { ' ' … '+' | '-' … '~' } .
+Application = { ' ' … '+' | '-' … '~' } .
+Initiated = { ' ' … '+' | '-' … '~' } .
+Failure = { ' ' … '+' | '-' … '~' } .
+Response = { ' ' … '+' | '-' … '~' } .
+Second = { ' ' … '+' | '-' … '~' } .
+IP = { ' ' … '+' | '-' … '~' } .
+'''
+
+[[grammars]]
+name = "csv"
+ebnf = '''
+root = Field { "," Field } .
+Field = { ' ' … '+' | '-' … '~' } .
+'''
+
+[[grammars]]
+name = "flow"
+ebnf = '''
+root = version " " accountid " " ifacearn " " srcaddr " " dstaddr " " srcport " " dstport " " protocol " " packets " " bytes " " start " " end " " action " " logstatus .
+version = { '0' … '9' } .
+accountid = { '0' … '9' } .
+ifacearn = { '!' … '~' } .
+srcaddr =  { '!' … '~' } .
+dstaddr =  { '!' … '~' } .
+srcport =  { '!' … '~' } .
+dstport =  { '!' … '~' } .
+protocol =  { '!' … '~' } .
+packets =  { '!' … '~' } .
+bytes =  { '!' … '~' } .
+start =  { '!' … '~' } .
+end =  { '!' … '~' } .
+action =  { '!' … '~' } .
+logstatus =  { '!' … '~' } .
+'''
+
+[[grammars]]
+name = "auth.log"
+ebnf = '''
+root = date " " host " " system [ "[" pid "]" ] ": " message .
+date = { 'A' … 'z' } " " {'0' … '9' } " " {'0' … '9'  | ':' } .
+host = { 'A' … 'z' } .
+system = { '!' … '9' | (';' … 'Z' | '^' … '~') } .
+pid = { '0' … '9' } .
+message = { ' ' … '~' } .
+'''
+
+[[grammars]]
+name = "none"
+ebnf = '''
+root = any .
+any = _ .
+'''

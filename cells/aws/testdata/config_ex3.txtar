@@ -1,0 +1,81 @@
+-- config --
+{
+  "accountId": "152229883546",
+  "resourceId": "09afcd94-0b72-487f-9dec-95e89b9863f0",
+  "awsRegion": "us-east-1",
+  "configuration": {
+    "customerMasterKeySpec": "SYMMETRIC_DEFAULT",
+    "keyState": "Enabled",
+    "origin": "AWS_KMS",
+    "encryptionAlgorithms": [
+      "SYMMETRIC_DEFAULT"
+    ],
+    "keyId": "09afcd94-0b72-487f-9dec-95e89b9863f0",
+    "description": "Default key that protects my Secrets Manager data when no other key is defined",
+    "creationDate": "2022-02-16T16:28:34.219Z",
+    "signingAlgorithms": [],
+    "enabled": true,
+    "keyManager": "AWS",
+    "macAlgorithms": [],
+    "keyUsage": "ENCRYPT_DECRYPT",
+    "arn": "arn:aws:kms:us-east-1:152229883546:key/09afcd94-0b72-487f-9dec-95e89b9863f0",
+    "awsaccountId": "152229883546",
+    "keySpec": "SYMMETRIC_DEFAULT",
+    "multiRegion": false
+  },
+  "arn": "arn:aws:kms:us-east-1:152229883546:key/09afcd94-0b72-487f-9dec-95e89b9863f0",
+  "configurationItemCaptureTime": "2023-04-27T23:48:53.252Z",
+  "availabilityZone": "Not Applicable",
+  "version": "1.3",
+  "resourceCreationTime": "2022-02-16T16:28:34.219Z",
+  "resourceType": "AWS::KMS::Key"
+}
+-- lioli --
+accountId "152229883546" .
+", " .
+resourceId "09afcd94-0b72-487f-9dec-95e89b9863f0" .
+", " .
+awsRegion "us-east-1" .
+", " .
+configuration {
+ customerMasterKeySpec "SYMMETRIC_DEFAULT" .
+ ", " .
+ keyState "Enabled" .
+ ", " .
+ origin "AWS_KMS" .
+ ", " .
+ #encryptionAlgorithms "SYMMETRIC_DEFAULT" .
+ ", " .
+ keyId "09afcd94-0b72-487f-9dec-95e89b9863f0" .
+ ", " .
+ description "Default key that protects my Secrets Manager data when no other key is defined" .
+ ", " .
+ creationDate "2022-02-16T16:28:34.219Z" .
+ ", " .
+ enabled "true" .
+ ", " .
+ keyManager "AWS" .
+ ", " .
+ keyUsage "ENCRYPT_DECRYPT" .
+ ", " .
+ arn "arn:aws:kms:us-east-1:152229883546:key/09afcd94-0b72-487f-9dec-95e89b9863f0" .
+ ", " .
+ awsaccountId "152229883546" .
+ ", " .
+ keySpec "SYMMETRIC_DEFAULT" .
+ ", " .
+ multiRegion "false" .
+ ", " .
+}
+arn "arn:aws:kms:us-east-1:152229883546:key/09afcd94-0b72-487f-9dec-95e89b9863f0" .
+", " .
+configurationItemCaptureTime "2023-04-27T23:48:53.252Z" .
+", " .
+availabilityZone "Not Applicable" .
+", " .
+version "1.3" .
+", " .
+resourceCreationTime "2022-02-16T16:28:34.219Z" .
+", " .
+resourceType "AWS::KMS::Key" .
+", " .;

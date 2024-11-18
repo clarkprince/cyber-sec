@@ -1,0 +1,15 @@
+{
+  "cookies": [
+    {
+      "name": "__Host-t.sftw.kraken",
+      "value": "3Hiob5XudHU=",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}

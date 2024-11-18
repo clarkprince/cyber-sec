@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        // Default CSS formatter will break "@apply foo:bar" by changing it to "@apply foo: bar"
+        // But Postcss has no default formatter
+        // => you'll need to format your CSS by hand until we figure the right setup
+        // @see https://github.com/tailwindlabs/tailwindcss/discussions/5258#discussioncomment-3812014
+        // tailwindcss is also possible
+        "*.css": "postcss"
+    },
+    // we need to tell the ARCH in advance so "syscall/js" package is known in Go code
+    "go.toolsEnvVars": {
+        "GOOS": "js",
+        "GOARCH": "wasm",
+    },
+    // will autoopen server on https
+    // @see https://github.com/microsoft/vscode/issues/162808
+    "remote.otherPortsAttributes": {
+        "protocol": "https"
+    }
+}

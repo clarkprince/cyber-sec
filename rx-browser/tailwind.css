@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	th {
+		/* reset browser padding */
+		padding: 0;
+	}
+}
+
+@layer components {
+	
+}
+
+/** Use layer for correct CSS priority*/
+@layer utilities {
+	.max-w-3 {
+		max-width: calc(33.333333% - 30px);
+	}
+
+	.mside-1 {
+		/* /!\ automatic formatting in CSS may add unexpected spaces to Tailwind modifiers */
+		@apply first:ml-0 last:mr-0 mx-1
+	}
+
+	.shadow-sm-bottom {
+		box-shadow: 0 2px 1px 0 rgb(0 0 0 / 0.05);
+	}
+
+	.nocaps {
+		font-variant-caps: normal;
+	}
+
+	.smallcaps {
+		font-variant-caps: small-caps;
+	}
+
+	.titlecase {
+		font-variant-caps: titling-caps;
+	}
+
+	.vbox {
+		@apply flex flex-row items-center
+	}
+
+	/* Center a floating element. Let’s do web like it’s 1990. */
+	.center-float {
+		@apply fixed inset-1/2 -translate-y-1/2 -translate-x-1/2
+	}
+
+	.fade-in {
+		animation-duration: .3s;
+		animation-fill-mode: forwards;
+		animation-name: fadein;
+	}
+
+	.fade-out {
+		animation-duration: .3s;
+		animation-fill-mode: forwards;
+		animation-name: fadeout;
+	}
+
+	@keyframes fadein {
+		from {
+			display: block;
+			position: absolute;
+			opacity: 0;
+		}
+
+		to {
+			position: static;
+			opacity: 1;
+		}
+	}
+
+	@keyframes fadeout {
+		from {
+			display: block;
+			position: static;
+			opacity: 1;
+		}
+
+		99% {
+			opacity: 0;
+		}
+
+		to {
+			display: none;
+			position: absolute;
+			opacity: 0;
+		}
+	}
+}

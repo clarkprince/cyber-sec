@@ -1,0 +1,26 @@
+-- policy --
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::123456789012:user/carlossalazar"
+      },
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::carlossalazar/*",
+        "arn:aws:s3:::carlossalazar"
+      ]
+    }
+  ]
+}
+-- lioli --
+effect "Allow" .
+action "s3:*" .
+resource "arn:aws:s3:::carlossalazar/*" .
+principal "arn:aws:iam::123456789012:user/carlossalazar" .;
+effect "Allow" .
+action "s3:*" .
+resource "arn:aws:s3:::carlossalazar" .
+principal "arn:aws:iam::123456789012:user/carlossalazar" .;

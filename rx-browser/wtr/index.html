@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript">
+    // defining a new element will now register it
+    // so we can display the list of registered elements
+    window.registeredElements = {}
+    var rawdefine = window.customElements.define.bind(window.customElements)
+    window.customElements.define = function(name,elem, ...args) {
+        console.log("Defining:", name)
+        registeredElements[name] = elem
+        rawdefine(name, elem, ...args)
+    }
+    </script>
+    <script id="componentscript" src="/assets/components.js" type="module"></script>
+    <script>
+    let componentscript = document.querySelector("#componentscript")
+    componentscript.addEventListener("load", function(){
+        // display elements
+        console.log("Elements:", window.registeredElements)
+        let list = document.querySelector("#componentlist")
+        let itemtemplate = document.querySelector("#componentitem")
+        Object.entries(window.registeredElements).forEach(function([elementName, elemDef]) {
+            let itemclone  = itemtemplate.content.cloneNode(true)
+
+            let itemlink = itemclone.querySelector("a")
+            let itemlinkhref = "/components/" + elementName
+            let itemprops = itemclone.querySelector("span.props")
+
+            // Lit element properties
+            props = elemDef.properties
+            if (props) {
+                // list only attribute, not internal state properties
+                const attributeprops = Object.entries(props).filter(function ([propName, propDef]) {
+                    return !propDef.state
+                })
+                itemprops.textContent = JSON.stringify(attributeprops)
+
+                // add props to the url search params too
+                const searchParams = new URLSearchParams()
+                attributeprops.forEach(function([propName, propDef]){
+                    // lit element can define custom attribute name for a given property
+                    searchParams.set(propDef.attribute || propName, "")
+                })
+                itemlinkhref += "?" + searchParams.toString()
+            }
+
+            itemlink.setAttribute("href", itemlinkhref)
+            itemlink.textContent = elementName
+
+            list.appendChild(itemclone)
+        })
+    })
+    </script>
+</head>
+
+<body>
+    <h2>Test data sets</h2>
+    <ul>
+    {{ range $key, $value := . }}
+       <li>
+       <a href="/components/wt-data?data-testid=datacell&manifest={&quot;DataSource&quot;:&quot;{{$value}}&quot;,&quot;Notebook&quot;:&quot;01GNMP1RECJ9AV1GC8CQS9S9NE&quot;,&quot;Cell&quot;:&quot;01GNMP1RECXEJZVF5FS1TZ8063&quot;}"
+       target="_blank">
+       {{$key}}
+       </a>
+       </li>
+    {{ end }}
+    </ul>
+    <h2>Notebook</h2>
+    <a href="/components/wt-notebook-body?notebook-id=default&owner=&created=">Default</a>
+
+    <h2>Available components</h2>
+    <p>NOTE: for each component, you might need to add the appropriate attributes in the URL query params</p>
+    <p>Feel free to manually add some well known components in this list with default attributes</p>
+    <ul id="componentlist">
+    </ul>
+    <template id="componentitem">
+        <li><a></a> - <span>Lit attributes:<span class="props">None</span><span></li>
+    </template>
+    <h2>Available templates</h2>
+    <p>TODO: go server could pass the list of files in "wtr/templates" folder</p>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+reload_assets = true
+allowed_folders = ["/home/ubuntu/webapp/files"]
+max_upload_size = 20
+
+[tls]
+certificate_file = "devcerts/localhost.pem"
+certificate_key_file = "devcerts/localhost-key.pem"
+
+[admin]
+listen_address = "localhost:5050"
+authorized_keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN0vMMKus3EeeVGRYypDqEGPHSCi5CLPuwNM3o9rFh3n ubuntu@primary"]

@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Kraken",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "/home/ubuntu/webapp/cmd/devserver",
+            "cwd": "/home/ubuntu/webapp/",
+            "showLog": true,
+        },
+        
+    ]
+}

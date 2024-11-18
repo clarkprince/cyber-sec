@@ -1,0 +1,78 @@
+# Watchdog for networks
+
+Network configuration can be a bit jumpy at times.
+This tool tries (hard) to keep interfaces up and running, in the face of network conditions
+
+Configuration is stored as an SQLite database, and provides the objects:
+
+=> profile (set of configuration, )
+=> ports (which one is up, down)
+=> ips 
+
+# Appel (user-level API)
+
+On site: setting up a network with one DMZ, and two monitored zone.
+The zones allow lateral movement
+
+ begin;
+ ; check script version
+ insert into net_addresses (port, address) values 
+   ('1', 'dhcp'),
+   ('2', '10.0.100.30/24'),
+   ('3', 'dhcp'),
+   ('4', '10.0.50.254/24');
+
+ insert into net_ports (port, profile) values
+   ('1', 'dmz'),
+   ('2', 'adm'),
+   ('3', 'mtr'),
+   ('4', 'mgd');
+
+ insert into net_address (port, address, netmask) values('1' , '10.0.10.1', 16);
+ ; when static insert into net_routes (port, prefix, gateway) values('1', '0.0.0.0/0', '10.0.254.254');
+ insert into net_routes (port, dynamic) values ('1', true);
+ insert into net_zones (port, prefix, dns) values ('3', '10.0.10.0/24', select dns from net_zones where port = '1');
+ insert into net_zones (port, prefix, dns) values ('4', '10.0.11.0/24', select dns from net_zones where port = '1');
+
+ commit;
+
+
+# Mode of operations
+
+1. Ensure that ip interfaces are set up as expected (use iproute)
+2. Use pings, and friends, building up trust that everything is set up
+3. Check name resolution
+4. Check status of DNSMasq
+
+# List of profiles
+
+Move to specifications??
+
+=> adm: Admin zones
+
+send a dhcp probe on the network (dhclient -1),
+if it does not work, fall over to starting own DHCP server (makes connect easy)
+
+=> dmz: De-militarized zone
+
+start automatically via DHCP.
+   if it does not work, fail, and require manual set up
+
+Port 1, configures the 
+
+=> mtr: Monitored zone
+
+
+
+isc-dhcp installed by default
+=> dhclient w/ config by default on enp1s0
+
+=> set names of devices ??
+
+admin0
+dmz0
+
+mnz1
+mnz2
+
+https://github.com/prometheus-community/pro-bing

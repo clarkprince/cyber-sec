@@ -1,0 +1,8 @@
+# Configuration files for the development server
+
+A lot of the functionalities of the server (e.g. grammars, OAuth, …) are stored in configuration files.
+
+We provide, by default, configuration that make sense for most of us.
+
+If you need to override a configuration file, replace the suffix by `.local.toml`, e.g. `oauth.local.toml`.
+Those files are ignored in the VCS, but take precedence when running the server locally

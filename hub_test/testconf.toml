@@ -1,0 +1,11 @@
+## Configuration for local, automated test.
+## All users have the “password” password.
+
+domain = "trout-test.example.net"
+max_upload_size = 20
+htpasswd = "hub_test/testusers"
+allowed_folders = ["demo_logs"]
+
+[tls]
+certificate_file = "devcerts/localhost.pem"
+certificate_key_file = "devcerts/localhost-key.pem"

@@ -1,0 +1,43 @@
+// System Actions
+// Code for actions are re-generated with `go generate`
+action admin/create_user
+action admin/update_license
+
+action mdt/view_field
+
+action playbook/create
+action playbook/open
+action playbook/resolve
+action playbook/escalate
+action playbook/assign
+action snapshot/erase
+
+action datasource/write
+action datasource/connect
+
+action search/user
+action search/notebook
+
+action policy/create
+action policy/open
+
+action audit/schedule
+action audit/assign
+
+action schedule/stop
+action schedule/start
+action schedule/remove
+
+label t.sftw/user_t
+label t.sftw/complianceofficer_t
+label t.sftw/sysadmin_t
+label t.sftw/unlabeled_t
+
+block t.sftw/default {
+	// Default access: users can do general playbook investigation
+	//                   compliance officers also have access to 
+	//                   system administrators can configure data sources, …
+	allow t.sftw/user_t t.sftw/unlabeled_t { search/% mdt/% playbook/% schedule/% }
+	allow t.sftw/complianceofficer_t t.sftw/unlabeled_t { policy/% audit/% snapshot/% }
+	allow t.sftw/sysadmin_t t.sftw/unlabeled_t { admin/% datasource/% snapshot/% }
+}
